@@ -4,7 +4,7 @@ Python 3 scripts. Serial implementation of Conformational Space Annealing (CSA),
 This method consists of a distance dependent simulated annealing and an evolutionary algorithm (see references below).
 
 This major rewrite allows for the implementation of new Hamiltonian and objective functions using
-a Base class as template. Crossover and mutations are designed according to the problem to solve.
+a Base class as template. Crossover and mutations are designed according to the problem to solve. The same for the distance function.
 
 A random generator class was implemented to facilitate future parallel CSA.
 
