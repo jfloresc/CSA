@@ -1,6 +1,6 @@
 # README #
 
-Python 3 scripts. Serial implementation of CSA global optimization method.
+Python 3 scripts. Serial implementation of Conformational Space Annealing (CSA) global optimization method.
 
 This major rewrite allows for the implementation of new Hamiltonian and objective functions using
 the Spin class as template.
