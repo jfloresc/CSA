@@ -5,7 +5,7 @@ Python 3 scripts. Serial implementation of Conformational Space Annealing (CSA) 
 This major rewrite allows for the implementation of new Hamiltonian and objective functions using
 the Spin class as template.
 
-A random generator class was implemented to facilitate future parallel implementation.
+A random generator class was implemented to facilitate future parallel CSA.
 
 The Spin class reproduces results from:
 - Seung-Yeon Kim, Sung Jong Lee, and Jooyoung Lee, Ground-state energy and energy landscape of the Sherrington-Kirkpatrick spin glass, 
