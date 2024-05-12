@@ -2,9 +2,17 @@
 
 Python 3 scripts. Serial implementation of CSA global optimization method.
 
-It reproduces results from:
+This major rewrite allows for the implementation of new Hamiltonian and objective functions using
+the Spin class as template.
+
+A random generator class was implemented to facilitate future parallel implementation.
+
+The Spin class reproduces results from:
 Seung-Yeon Kim, Sung Jong Lee, and Jooyoung Lee, Ground-state energy and energy landscape of the Sherrington-Kirkpatrick spin glass, 
 Phys.Rev.B, Vol. 76, 184412-1 - 184412-7 (2007).
+
+Open Source implementation of CSA from:
+Insuk Joung, et al., Computer Physics Communications, Vol. 223, 28-33, (2018).
 
 TODO:
 Parallel implementation of CSA global optimization method.
