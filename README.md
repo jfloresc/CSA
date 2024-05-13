@@ -17,7 +17,7 @@ This is my open source implementation of CSA as described by (and references wit
 - J. Lee, H. A. Scheraga, and S. Rackovsky, J. Comput. Chem. Vol. 18,
 1222, (1997)
 
-- Insuk Joung, et al., Computer Physics Communications, Vol. 223, 28-33, (2018).
+- J. Insuk et al., Computer Physics Communications, Vol. 223, 28-33, (2018).
 
 TODO:
 Parallel implementation of CSA global optimization method.
