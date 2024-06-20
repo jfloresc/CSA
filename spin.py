@@ -507,9 +507,11 @@ class CSA(Base):
         # get indexes of unused spin vectors
         if is_new_stage:
             # get indexes of only the newly added configurations to the bank in the new stage
-            record_index = [i for i, x in zip(r_bank[-self._n_new_config:], record[-self._n_new_config:]) if x == False]
+            #record_index = [i for i, x in zip(r_bank[-self._n_new_config:], record[-self._n_new_config:]) if x == False]
+            record_index = [i for i in r_bank[-self._n_new_config:] if not record[i]]
         else:
-            record_index = [i for i, x in enumerate(record) if x == False]
+            #record_index = [i for i, x in enumerate(record) if x == False]
+            record_index = [i for i, x in enumerate(record) if not x]
         n_unused = len(record_index)
         if n_unused >= self._n_seed:
             print(f"First condition applies, #n_unused {n_unused}, #n_seed {self._n_seed}")
@@ -628,13 +630,15 @@ class CSA(Base):
         # bug, originally was dij_min < dcut
         # insert the new global minimum
         if dij_min <= self._dcut and genes_ene[1] < bank[j_min][1]:
-            bank[j_min][0] = copy.deepcopy(genes_ene[0])
-            bank[j_min][1] = copy.deepcopy(genes_ene[1])
+            #bank[j_min][0] = copy.deepcopy(genes_ene[0])
+            #bank[j_min][1] = copy.deepcopy(genes_ene[1])
+            bank[j_min] = genes_ene
         # update the local minimum with the highest energy energy
         elif dij_min > self._dcut and genes_ene[1] < ene_max:
             #print('update ene_max', ene_max, 'new_ene:', genes_ene[1])
-            bank[i_max][0] = copy.deepcopy(genes_ene[0])
-            bank[i_max][1] = copy.deepcopy(genes_ene[1])
+            #bank[i_max][0] = copy.deepcopy(genes_ene[0])
+            #bank[i_max][1] = copy.deepcopy(genes_ene[1])
+            bank[i_max] = genes_ene
 
         return bank
 
@@ -799,7 +803,7 @@ if  __name__ == '__main__':
 
     # create spin object to minimize
     # number of spins
-    N_SPINS = 63 
+    N_SPINS = 31 
 
     # total number of rounds
     N_ROUNDS = 27 # 3 rounds * 9 stages
