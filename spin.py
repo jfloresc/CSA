@@ -37,7 +37,7 @@ from randcsa import RandCSA
 ###################################################################################################
 
 class Base(metaclass=abc.ABCMeta):
-    """Define abctract methods to be used by CSA objects and data types to optimize"""
+    """Define abstract methods to be used by CSA objects and data types to optimize"""
     @abc.abstractmethod
     def createbank(self, size_bank):
         """Create bank method"""
@@ -68,13 +68,14 @@ class Spin(Base):
     Template for new data types
     """
 
-    def __init__(self, n_size, serial_index, randomseed=None):
+    def __init__(self, n_size, serial_index, name="spin.dat", randomseed=None):
         """Create new spin object
         """
         self._n_size = n_size
         self._id = serial_index
         self._rand_seed = randomseed
         self._j_coupling = np.array([])
+        self._name = name
 
     def initialize(self):
         """Initialize object"""
@@ -126,7 +127,7 @@ class Spin(Base):
     def initiate_j_coupling(self):
         """Create a new spin state"""
         self._j_coupling = self._prng.random.choice([-1,1], size=(self._n_size, self._n_size))
-        self.name = f'J_{self._id}'
+        self._name = f'J_{self._id}'
 
     def write_j_coupling(self):
         """save state in file"""
@@ -186,7 +187,7 @@ class Spin(Base):
         random_spins = []
         s_value = lambda p: -1 if p == 0 else 1
         for _ in range(self._n_size):
-            p_int = self._prng.random.randint(2)
+            p_int = self._prng.random.integers(2)
             random_spins.append(s_value(p_int))
         return random_spins
 
@@ -250,7 +251,7 @@ class Spin(Base):
         rindx = self._prng.random.choice(range(self._n_size), k)
         # temporary solution when the base dataset is numpy array
         if type(obj_2) == np.ndarray:
-            obj1_1[rindx] = obj_2[rindx]
+            obj_1[rindx] = obj_2[rindx]
         elif type(obj_2) == list:
             for idx in rindx:
                 obj_1[idx] = obj_2[idx]
@@ -268,7 +269,7 @@ class Spin(Base):
         rindx = self._prng.random.choice(range(self._n_size), k)
         # temporary solution when the base dataset is numpy array
         if type(obj_2) == np.ndarray:
-            obj1_1[rindx] = obj_2[rindx]
+            obj_1[rindx] = obj_2[rindx]
         elif type(obj_2) == list:
             for idx in rindx:
                 obj_1[idx] = obj_2[idx]
@@ -286,9 +287,9 @@ class Spin(Base):
         # temporary solution when the base dataset is numpy array
         if type(obj_1) == np.ndarray:
             # values to randomize -1 or +1
-            obj1_1[rindx] = self._prng.choice([-1,1], size=k) 
+            obj_1[rindx] = self._prng.choice([-1,1], size=k) 
             # negating
-            #obj1_1[rindx] = -obj_1[rindx] 
+            #obj_1[rindx] = -obj_1[rindx] 
         elif type(obj_1) == list:
             for idx in rindx:
                 obj_1[idx] = self._prng.choice([-1, 1]) 
@@ -308,9 +309,9 @@ class Spin(Base):
         # temporary solution when the base dataset is numpy array
         if type(obj_1) == np.ndarray:
             # values to randomize -1 or +1
-            obj1_1[idx:idx+k] = self._prng.random.choice([-1,1], size=k) 
+            obj_1[idx:idx+k] = self._prng.random.choice([-1,1], size=k) 
             # negating
-            #obj1_1[rindx] = -obj_1[rindx] 
+            #obj_1[rindx] = -obj_1[rindx] 
         elif type(obj_1) == list:
             obj_1[idx:idx+k] = [self._prng.random.choice([-1, 1]) for x in range(k)]
         return obj_1
@@ -447,6 +448,9 @@ class CSA(Base):
             for j in range(i+1, nbank):
                 sum_dist += self.distance(bank[i][0], bank[j][0])
                 count += 1
+        if count == 0:
+            raise Exception("count variable is zero, check the size of bank")
+
         return float(sum_dist)/count
 
     def distance(self, obj_1, obj_2):
@@ -792,7 +796,7 @@ if  __name__ == '__main__':
 
     # create spin object to minimize
     # number of spins
-    N_SPINS = 127
+    N_SPINS = 63 
 
     # total number of rounds
     N_ROUNDS = 27 # 3 rounds * 9 stages
