@@ -342,7 +342,7 @@ class CSA(Base):
         self._n_max_trials = n_max_trials
         self._trials = 0
         self._k = 0.0
-        self._instance_counter = 0
+        #self._instance_counter = 0
         self._dist_traj_file = ''
         self._global_ene_file = ''
         self._gmin = None
@@ -694,8 +694,10 @@ class CSA(Base):
 
                 # increase bank1 and bank
                 # extending lists, for np.arrays use concatenate in axis=0
-                bank1 = bank1 + copy.deepcopy(trial_bank)
-                bank = copy.deepcopy(bank) + copy.deepcopy(trial_bank)
+                # bank1 = bank1 + copy.deepcopy(trial_bank)
+                bank1.extend(trial_bank)
+                #bank = copy.deepcopy(bank) + copy.deepcopy(trial_bank)
+                bank.extend(trial_bank)
                 # both banks have changed their lenght by n_new_config
                 nbank += self._n_new_config
                 # adapt dave since bank1 has changed when a new stage begins
