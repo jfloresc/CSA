@@ -377,7 +377,7 @@ class CSA(Base):
         """Open distance trajectory and global minimum energy files"""
         self._dist_traj_file = f'output_{self._id}_{istep}.dat'
         self._global_ene_file = f'minimum_{self._id}_{istep}.dat'
-        print("Opening files: ", self._dist_traj_file, self._global_ene_file)
+        print(f"Opening files: {self._dist_traj_file}, {self._global_ene_file}")
         if os.path.exists(self._dist_traj_file) or os.path.exists(self._global_ene_file):
             print(f"Files {self._dist_traj_file} {self._global_ene_file} were overwritten")
             with open(self._dist_traj_file, 'w', ) as _:
@@ -693,9 +693,9 @@ class CSA(Base):
                 trial_bank, ene_max_t, i_max_t = self.createbank(self._n_new_config)
                 # debugging 
                 #print('after adding config. to bank, ene_max', ene_max,'ene_max_new', ene_max_t)
-                print('For the new bank addition: Ene_max', ene_max_t,'at index', i_max_t)
+                print(f"For the new bank addition: Ene_max {ene_max_t}, at index {i_max_t}")
                 trial_ene_min, trial_i_min = self.findminimum(trial_bank)
-                print('For the new bank addition: Ene_min', trial_ene_min,'at index', trial_i_min)
+                print(f"For the new bank addition: Ene_min {trial_ene_min}, at index {trial_i_min}")
 
                 # increase bank1 and bank
                 # extending lists, for np.arrays use concatenate in axis=0
@@ -771,7 +771,7 @@ class CSA(Base):
                 f' i_bank1_max: {i_max} Ene_max1:'\
                 f' {ene_max1} Ene_min1: {bank1_ene_min} i_bank1_min: {bank1_i_min}')
             iround += 1
-        print(f'total number of minimizations: {self._trials}')
+        print(f'Total number of minimizations: {self._trials}')
         gmin_ene, i_gmin = self.findminimum(bank)
         return (gmin_ene, i_gmin, bank)
 
@@ -784,7 +784,7 @@ class CSA(Base):
         """
 
         gmin_ene, bank_i_gmin, gbank = self.calc(istep)
-        print(f'min from bank {gmin_ene}')
+        print(f'Min from bank {gmin_ene}')
         self.log_gmin_file(istep, gmin_ene)
         name = f'bank_gmin_{self._id}_{istep}.dat'
         self.print_bank(name, gbank)
@@ -814,7 +814,7 @@ if  __name__ == '__main__':
         # create object to globally optimize
         spin = Spin(N_SPINS, serial_id, randomseed=2)
         spin.initialize()
-        print("Seed used", spin._prng.get_state)
+        print(f"Seed used {spin._prng.get_state}")
         spin._prng.save("state.pkl")
         # read J_0.dat
         #spin.read_j_coupling()
