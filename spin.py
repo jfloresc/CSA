@@ -489,8 +489,8 @@ class CSA(Base):
                 # tuple of distance to the conformation and conformation's energy
                 index_to_d_energy[i] = (dij, bank[i][1])
             # filter bank conformations with distance from current seed > dave
-            temp = {k:v for k, v in index_to_d_energy.items() if v[0]  > self._dave}
-            if len(temp) > 0:
+            temp = {k: v for k, v in index_to_d_energy.items() if v[0]  > self._dave}
+            if temp:
                 # find index of conformation with minimum energy after the filter
                 sel_idx = min(temp.items(), key=lambda k:k[1][1])[0]
             # if filter result is zero, select seed with largest distance
