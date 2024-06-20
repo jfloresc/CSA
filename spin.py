@@ -68,14 +68,15 @@ class Spin(Base):
     Template for new data types
     """
 
-    def __init__(self, n_size, serial_index, name="spin.dat", randomseed=None):
+    def __init__(self, n_size, serial_index, randomseed=None):
         """Create new spin object
         """
         self._n_size = n_size
         self._id = serial_index
         self._rand_seed = randomseed
         self._j_coupling = np.array([])
-        self._name = name
+        self._name = None 
+        self._prng = None
 
     def initialize(self):
         """Initialize object"""
