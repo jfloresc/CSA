@@ -127,7 +127,9 @@ class Spin(Base):
 
     def initiate_j_coupling(self):
         """Create a new spin state"""
-        self._j_coupling = self._prng.random.choice([-1,1], size=(self._n_size, self._n_size))
+        #self._j_coupling = self._prng.random.choice([-1,1], size=(self._n_size, self._n_size))
+        upper_tri = np.triu(self._prng.random.choice([-1, 1], size=(self._n_size, self._n_size)), k=1)
+        self._j_coupling = upper_tri + upper_tri.T
         self._name = f'J_{self._id}'
 
     def write_j_coupling(self):
@@ -219,11 +221,21 @@ class Spin(Base):
     def hamiltonian(self, spins):
         """Calculate of hamiltonian function given parameters j_coupling
         and a configuration of spins"""
-        energy = 0
-        for i in range(self._n_size):
-            for j in range(i+1, self._n_size):
-                energy += spins[i]*spins[j]*self._j_coupling[i,j]
-        return  -float(energy)/(np.sqrt(self._n_size)*self._n_size)
+        #energy = 0
+        #for i in range(self._n_size):
+        #    for j in range(i+1, self._n_size):
+        #        energy += spins[i]*spins[j]*self._j_coupling[i,j]
+        #energy = -float(energy)/(np.sqrt(self._n_size)*self._n_size)
+        spins = np.array(spins)
+        if spins.ndim != 1:
+            raise ValueError("spins should be a one-dimensional array.")
+       
+        if self._j_coupling.shape[0] != self._j_coupling.shape[1] or self._j_coupling.shape[0] != spins.size:
+            raise ValueError("j_coupling must be a square matrix with dimensions equal to the number of spins.")
+        
+        energy = -0.5 * np.dot(spins, np.dot(self._j_coupling, spins)) / (np.sqrt(self._n_size) * self._n_size)
+        
+        return energy
 
     def projection(self, spins_a, spins_b) :
         """Calculate projection"""
