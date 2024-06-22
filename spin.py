@@ -576,7 +576,9 @@ class CSA(Base):
                 #record_index = [i for i, x in enumerate(record[self._n_new_config:]) if x == False and i != index]
                 #record_index = [i for i, x in zip(r_bank1[-self._n_new_config:], record[-self._n_new_config:])\
                 #                if x == False and i != index]
-                record_index = [i for i, x in zip(r_bank1[-self._n_new_config:], record[-self._n_new_config:]) if i != index]
+                #record_index = [i for i, x in zip(r_bank1[-self._n_new_config:], record[-self._n_new_config:]) if i != index]
+                # TODO: check this condition
+                record_index = [i for i in r_bank1[-self._n_new_config:] if i != index]
                 #print('First round in stage', record_index)
             else:
                 #record_index = [i for i, x in enumerate(record) if x == False and i != index]
