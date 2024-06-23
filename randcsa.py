@@ -40,6 +40,11 @@ class RandCSA(object):
         return self._random.bit_generator.state
 
     @property
+    def set_state(self):
+        """set state"""
+        return self._random.bit_generator.state
+
+    @set_state.setter
     def set_state(self, state):
         """set state"""
         self._random.bit_generator.state = state 

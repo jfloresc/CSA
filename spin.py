@@ -261,13 +261,17 @@ class Spin(Base):
         k = self._prng.random.integers(1, max_vars + 1)
         # indexes of the variables to alter
         #rindx = random.sample(range(self._n_size), k)
-        rindx = self._prng.random.choice(range(self._n_size), k)
+        # TODO: check if replace=True is needed here, with replacement
+        rindx = self._prng.random.choice(range(self._n_size), k, replace=False)
+        #print(f"This is the original obj: {obj_1}")
+        #print(f"Index selected by crossover choice: {rindx}")
         # temporary solution when the base dataset is numpy array
         if type(obj_2) == np.ndarray:
             obj_1[rindx] = obj_2[rindx]
         elif type(obj_2) == list:
             for idx in rindx:
                 obj_1[idx] = obj_2[idx]
+        #print(f"This is the modified obj: {obj_1}")
         return obj_1
 
     def crossover1(self, obj_1, obj_2):
@@ -279,7 +283,8 @@ class Spin(Base):
         k = self._prng.random.integers(1, max_vars + 1)
         # indexes of the variables to alter
         #rindx = random.sample(range(self._n_size), k)
-        rindx = self._prng.random.choice(range(self._n_size), k)
+        # TODO: check if replace=True is needed here, with replacement
+        rindx = self._prng.random.choice(range(self._n_size), k, replace=False)
         # temporary solution when the base dataset is numpy array
         if type(obj_2) == np.ndarray:
             obj_1[rindx] = obj_2[rindx]
@@ -817,7 +822,7 @@ if  __name__ == '__main__':
 
     # create spin object to minimize
     # number of spins
-    N_SPINS = 31 
+    N_SPINS = 127 
 
     # total number of rounds
     N_ROUNDS = 27 # 3 rounds * 9 stages
